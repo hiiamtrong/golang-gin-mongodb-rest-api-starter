@@ -16,6 +16,7 @@ func InitRouter(
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+	r.Use(middleware.Cors())
 	m := middleware.NewAppMiddleware(config)
 	SetupSwagger(r, config)
 
@@ -42,6 +43,7 @@ func InitRouter(
 			todoV1.Use(m.JWT())
 			todoV1.GET("", todoAPIV1.List())
 			todoV1.POST("", todoAPIV1.Create())
+			todoV1.GET("/:id", todoAPIV1.Read())
 			todoV1.PUT("/:id", todoAPIV1.Update())
 			todoV1.DELETE("/:id", todoAPIV1.Delete())
 		}

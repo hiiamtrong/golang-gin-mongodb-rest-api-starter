@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+
 	objectidpkg "github.com/hiiamtrong/golang-gin-mongodb-rest-api-starter/pkg/object_id"
 	"github.com/hiiamtrong/golang-gin-mongodb-rest-api-starter/repository"
 
@@ -11,6 +12,7 @@ import (
 type TodoService interface {
 	Create(ctx context.Context, todo model.Todo) (*model.Todo, error)
 	List(ctx context.Context) ([]model.Todo, error)
+	Read(ctx context.Context, todoID string) (*model.Todo, error)
 	Update(ctx context.Context, todoID string, data map[string]interface{}) (*model.Todo, error)
 	Delete(ctx context.Context, todoID string) error
 }
@@ -40,6 +42,15 @@ func (svc *todoServiceImpl) List(ctx context.Context) ([]model.Todo, error) {
 	}
 
 	return todos, nil
+}
+
+func (svc *todoServiceImpl) Read(ctx context.Context, todoID string) (*model.Todo, error) {
+	todoObjectID := objectidpkg.ObjectIDFromHex(todoID)
+	todo, err := svc.todoRepo.FindOneByID(ctx, todoObjectID)
+	if err != nil {
+		return nil, err
+	}
+	return todo, nil
 }
 
 func (svc *todoServiceImpl) Update(ctx context.Context, todoID string, data map[string]interface{}) (*model.Todo, error) {

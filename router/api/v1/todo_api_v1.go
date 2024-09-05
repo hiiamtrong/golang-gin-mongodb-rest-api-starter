@@ -42,6 +42,29 @@ func (a *TodoAPIV1) List() gin.HandlerFunc {
 	}
 }
 
+// Read Todo
+// @Tags Todo
+// @Summary Read a todo
+// @Description Read a todo
+// @Security Bearer
+// @Accept json
+// @Produce json
+// @Param id path string true "Todo ID"
+// @Success 200 {object} model.Todo
+// @Router /api/v1/todo/{id} [get]
+func (a *TodoAPIV1) Read() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		todoID := c.Param("id")
+		todo, err := a.todoSvc.Read(c.Request.Context(), todoID)
+		if err != nil {
+			api.ResponseError(c, http.StatusInternalServerError, errpkg.ERROR, err)
+			return
+		}
+
+		api.ResponseSuccess(c, http.StatusOK, todo)
+	}
+}
+
 // Create Todo
 // @Tags Todo
 // @Summary Create a new todo

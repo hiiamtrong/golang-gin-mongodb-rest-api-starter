@@ -14,6 +14,7 @@ const TodoCollection = "todo"
 type TodoRepository interface {
 	Create(ctx context.Context, todo *model.Todo) (*model.Todo, error)
 	List(ctx context.Context) ([]model.Todo, error)
+	FindOneByID(ctx context.Context, todoID primitive.ObjectID) (*model.Todo, error)
 	Update(ctx context.Context, todoID primitive.ObjectID, data map[string]interface{}) (*model.Todo, error)
 	Delete(ctx context.Context, todoID primitive.ObjectID) error
 }
@@ -49,6 +50,20 @@ func (repo *todoRepositoryImpl) List(ctx context.Context) ([]model.Todo, error) 
 		return nil, err
 	}
 	return todos, nil
+}
+
+func (repo *todoRepositoryImpl) FindOneByID(ctx context.Context, todoID primitive.ObjectID) (*model.Todo, error) {
+	result := repo.Mongodb.Database.Collection(TodoCollection).FindOne(ctx, bson.D{{"_id", todoID}})
+	if result.Err() != nil {
+		return nil, result.Err()
+	}
+
+	todo := &model.Todo{}
+	err := result.Decode(todo)
+	if err != nil {
+		return nil, err
+	}
+	return todo, nil
 }
 
 func (repo *todoRepositoryImpl) Update(ctx context.Context, todoID primitive.ObjectID, data map[string]interface{}) (*model.Todo, error) {

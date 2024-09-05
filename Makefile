@@ -13,3 +13,7 @@ compose-down:
 .PHONY: compose-down-v
 compose-down-v:
 	docker compose -f docker/docker-compose.yml --env-file .env down -v
+
+.PHONY: server
+server:
+	go run cmd/server/main.go
