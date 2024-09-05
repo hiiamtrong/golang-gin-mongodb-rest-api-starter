@@ -1,0 +1,30 @@
+app:
+  env: debug
+
+server:
+  port: 3000
+  host: localhost
+  url: http://localhost:3000
+  readTimeout: 10s
+  writeTimeout: 10s
+
+swagger:
+  host: localhost:3000
+  basePath: /
+  schemes: http,https
+  username: admin
+  password: admin
+
+log:
+  level: debug
+
+mongodb:
+  host: localhost
+  port: 27017
+  database: todo
+  username: todo_user
+  password: todo123!
+
+jwt:
+  secret: secret
+  expiration: 1h
