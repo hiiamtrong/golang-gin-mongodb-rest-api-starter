@@ -1,3 +1,8 @@
+volumes:
+    mongodb_data:
+networks:
+  todo-network:
+  
 name: gin-mongodb-rest-api-starter
 services:
   mongodb:
@@ -33,7 +38,4 @@ services:
     restart: always
     networks:
       - todo-network
-volumes:
-    mongodb_data:
-networks:
-  todo-network:
+

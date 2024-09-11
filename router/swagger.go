@@ -1,6 +1,8 @@
 package router
 
 import (
+	"fmt"
+	"log"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -27,4 +29,6 @@ func SetupSwagger(r *gin.Engine, config *config.Config) {
 	}))
 
 	group.GET("/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
+	log.Println("Swagger UI available at", fmt.Sprintf("%s/swagger/index.html", swgCfg.Host))
 }
