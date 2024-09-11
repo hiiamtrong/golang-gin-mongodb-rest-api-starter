@@ -9,7 +9,33 @@ This is a starter project for building RESTful APIs using Golang, Gin, and Mongo
 - Make
 
 ## Installation
-1. Clone the repository
-2. Run `make compose-up` to start the MongoDB container
+### Docker
+1. Copy env example and change value for docker
+```sh
+cp .env.example .env
+```
+
+2. Run `make compose-up` to start
+
+### Local
+1. Copy env example and change value for local
+```sh
+cp .env.example .env
+```
+
+2. Start other services use docker
+```sh
+make compose-local-up 
+```
+
 3. Run `make server` to start the server
+
+## Swagger
+Swagger UI local available at localhost:3000/swagger/index.html
+
+### Generate swagger docs
+```
+make docs
+```
+
 
