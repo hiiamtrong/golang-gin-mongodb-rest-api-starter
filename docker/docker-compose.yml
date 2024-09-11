@@ -11,6 +11,29 @@ services:
         MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
         MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
         MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+    restart: always
+    networks:
+      - todo-network
 
+  todo-api:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      args:
+        - SERVER_PORT=${SERVER_PORT}
+    container_name: todo-api
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    environment:
+      MONGODB_HOST: ${MONGODB_HOST}
+      MONGODB_PORT: ${MONGODB_PORT}
+      MONGODB_USERNAME: ${MONGODB_USERNAME}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      MONGODB_DATABASE: ${MONGODB_DATABASE}
+    restart: always
+    networks:
+      - todo-network
 volumes:
     mongodb_data:
+networks:
+  todo-network:

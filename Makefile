@@ -5,6 +5,9 @@ docs:
 .PHONY: compose-up
 compose-up:
 	docker compose -f docker/docker-compose.yml --env-file .env up -d
+.PHONY: compose-up-b
+compose-up-b:
+	docker compose -f docker/docker-compose.yml --env-file .env up -d --build
 
 .PHONY: compose-down
 compose-down:

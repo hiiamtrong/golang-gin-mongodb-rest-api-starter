@@ -1,0 +1,8 @@
+.env
+bin
+.idea
+README.md
+Makefile
+.gitigore
+docker
+.dockerignore
